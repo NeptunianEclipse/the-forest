@@ -32,4 +32,4 @@ lumberjack_inspection_interval = 12
 bear_inspection_interval = 12
 
 sim_length = 4800
-update_delay = 0.01
+update_delay = 0.1

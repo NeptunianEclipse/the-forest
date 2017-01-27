@@ -409,5 +409,5 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-world = World(10, 10)
+world = World(20, 20)
 world.simulate()
