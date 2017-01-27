@@ -1,5 +1,5 @@
-world_width = 100
-world_height = 100
+world_width = 20
+world_height = 20
 
 class starting_percentages():
     trees = 0.5
@@ -19,8 +19,8 @@ class symbol_colours():
     lumberjack = "cyan"
     bear = "red"
 
-tree_sapling_spawn_chance = 0.1
-elder_sapling_spawn_chance = 0.2
+tree_sapling_spawn_chance = 0.15
+elder_sapling_spawn_chance = 0.3
 
 tree_lumber = 1
 elder_tree_lumber = 2

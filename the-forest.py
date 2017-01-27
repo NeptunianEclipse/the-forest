@@ -13,7 +13,7 @@ import settings
 # Contains and manages a 2D map of objects
 class World():
 
-    def __init__(self, width, height):
+    def __init__(self, width = settings.world_width, height = settings.world_height):
         self.width = width
         self.height = height
 
@@ -125,8 +125,14 @@ class World():
                 self.random_distribute_objs(Lumberjack, num_hires, self.create_lumberjack)
 
             elif len(self.lumberjacks) > 1:
-                lumberjack = self.lumberjacks[randint(0, len(self.lumberjacks) - 1)]
-                self.remove_lumberjack(lumberjack)
+                num_removals = math.floor((len(self.lumberjacks) - lumber) / 1) + 1
+                num_removals = min(num_removals, len(self.lumberjacks) - 1)
+
+                for i in range(num_removals):
+                    lumberjack = self.lumberjacks[randint(0, len(self.lumberjacks) - 1)]
+                    self.remove_lumberjack(lumberjack)
+
+            self.reset_lumber()
 
         if self.month % settings.bear_inspection_interval == 0:
             attacks = self.get_total_attacks()
@@ -137,6 +143,8 @@ class World():
                 bear = self.bears[randint(0, len(self.bears) - 1)]
                 self.remove_bear(bear)
 
+            self.reset_attacks()
+
     def get_total_lumber(self):
         total = 0
         for lumberjack in self.lumberjacks:
@@ -144,12 +152,20 @@ class World():
 
         return total
 
+    def reset_lumber(self):
+        for lumberjack in self.lumberjacks:
+            lumberjack.lumber = 0
+
     def get_total_attacks(self):
         total = 0
         for bear in self.bears:
             total += bear.attacks
 
         return total
+
+    def reset_attacks(self):
+        for bear in self.bears:
+            bear.attacks = 0
 
     # Draws (prints) all objects in the world, as well as the rest of the interface
     def draw(self):
@@ -159,7 +175,7 @@ class World():
         print("Simulated Ecology - The Forest")
         print("-" * 50)
         print("")
-        print("Month {}".format(self.month))
+        print("Month: {} | Trees: {} | Lumberjacks: {} | Bears: {}".format(self.month, len(self.trees), len(self.lumberjacks), len(self.bears)))
         print("")
         print("+" + (" -" * self.width) + " +")
 
@@ -409,5 +425,5 @@ def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-world = World(20, 20)
+world = World()
 world.simulate()
